@@ -98,4 +98,25 @@ public class Cat {
     public void decreaseWantToPlay(int wantToPlay){
         this.wantToPlay = Math.max(0, this.wantToPlay  - wantToPlay);
     }
+
+    public String getDeathReason(){
+        if (weight < 1.0) {
+            return "Умер от истощения";
+        } else if (weight > 15.0) {
+            return "Умер от ожирения";
+        } else if (hunger <= 0) {
+            return "Умер от голода";
+        } else if (age >= 15) {
+            return "Умер от старости";
+        }
+        return null;
+    }
+
+    public boolean isDead() {
+        return getDeathReason() != null;
+    }
+
+    public Mood getMood() {
+        return Mood.of(this.hunger, this.wantToPlay);
+    }
 }

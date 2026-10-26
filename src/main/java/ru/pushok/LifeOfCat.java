@@ -20,6 +20,11 @@ public class LifeOfCat {
             System.out.println("\n" + "─".repeat(40));
             menuOfCat.showMainMenu();
             running = menuOfCat.handleMainCommand(cat, scanner);
+
+            if (cat.isDead()) {
+                System.out.println("💀 " + cat.getName() + " " + cat.getDeathReason());
+                break;
+            }
         }
 
         scanner.close();

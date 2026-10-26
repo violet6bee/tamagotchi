@@ -12,6 +12,7 @@ public class MenuOfCat {
         System.out.println(cat.getAgeInfo());
         System.out.println("Сытость: " + cat.getHunger() + " (0 – сильно хочет есть, 100 – сыт)");
         System.out.println("Желание играть: " + cat.getWantToPlay() + " (0 – не хочет, 100 – хочет)");
+        System.out.println("Настроение: " + cat.getMood().getMoodName());
     }
 
     public void showFoodMenu() {
