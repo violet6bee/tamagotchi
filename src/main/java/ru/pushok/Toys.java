@@ -8,9 +8,9 @@ public enum Toys {
     private final String name;
     private final int playSatisfactionIncrease;
 
-    Toys(String name, int wantToPlay) {
+    Toys(String name, int playSatisfactionIncrease) {
         this.name = name;
-        this.playSatisfactionIncrease = wantToPlay;
+        this.playSatisfactionIncrease = playSatisfactionIncrease;
     }
 
     public String getName() {
