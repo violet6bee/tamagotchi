@@ -1,12 +1,10 @@
 package ru.pushok;
 
-import java.util.Scanner;
-
 public class Cat {
     private String name;
     private double weight;
     private int age;
-    private int hunger;
+    private int satiety;
     private int wantToPlay;
 
     private static final int FEED_THRESHOLD = 50;
@@ -19,7 +17,7 @@ public class Cat {
     public Cat() {
         this.weight = 3.0;
         this.age = 0;
-        this.hunger = 50;
+        this.satiety = 50;
         this.wantToPlay = 50;
     }
 
@@ -48,8 +46,8 @@ public class Cat {
         return "Возраст кота: " + age + " " + getYearWord(age);
     }
 
-    public int getHunger() {
-        return hunger;
+    public int getSatiety() {
+        return satiety;
     }
 
     public int getWantToPlay() {
@@ -57,15 +55,15 @@ public class Cat {
     }
 
     public void feed(Food food) {
-        if (this.hunger > FEED_THRESHOLD) {
+        if (this.satiety > FEED_THRESHOLD) {
             System.out.println("Кот не хочет есть");
             return;
         }
 
         this.weight = this.weight + food.getWeightGain();
-        this.hunger = Math.min(100, this.hunger + food.getHungerIncrease());
+        this.satiety = Math.min(100, this.satiety + food.getSatietyIncrease());
         System.out.println("Кот поел " + "\"" + food.getName() + "\"" + ". " +
-                "Вес: " + weight + " кг, сытость: " + hunger);
+                "Вес: " + weight + " кг, сытость: " + satiety);
     }
 
     public void play(Toys toys) {
@@ -74,10 +72,10 @@ public class Cat {
             return;
         }
 
-        if (this.hunger <= MIN_HUNGER_TO_PLAY ) {
+        if (this.satiety <= MIN_HUNGER_TO_PLAY ) {
             System.out.println(name + " не хочет играть, потому что он голодный");
             return;
-        } else if (this.hunger >= MAX_HUNGER_TO_PLAY) {
+        } else if (this.satiety >= MAX_HUNGER_TO_PLAY) {
             System.out.println(name + " не хочет играть, потому что он сытый");
             return;
         }
@@ -99,12 +97,12 @@ public class Cat {
         this.weight += weight;
     }
 
-    public void increaseHunger(int hunger) {
-        this.hunger = Math.min(100, this.hunger + hunger);
+    public void increaseSatiety(int satiety) {
+        this.satiety = Math.min(100, this.satiety + satiety);
     }
 
-    public void decreaseHunger(int hunger) {
-        this.hunger = Math.max(0, this.hunger - hunger);
+    public void decreaseSatiety(int satiety) {
+        this.satiety = Math.max(0, this.satiety - satiety);
     }
 
     public void increaseWantToPlay(int wantToPlay) {
@@ -120,7 +118,7 @@ public class Cat {
             return "Умер от истощения";
         } else if (weight > MAX_HEALTHY_WEIGHT) {
             return "Умер от ожирения";
-        } else if (hunger <= 0) {
+        } else if (satiety <= 0) {
             return "Умер от голода";
         } else if (age >= MAX_AGE) {
             return "Умер от старости";
@@ -133,6 +131,6 @@ public class Cat {
     }
 
     public Mood getMood() {
-        return Mood.of(this.hunger, this.wantToPlay);
+        return Mood.of(this.satiety, this.wantToPlay);
     }
 }

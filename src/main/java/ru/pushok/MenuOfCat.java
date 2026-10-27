@@ -28,7 +28,7 @@ public class MenuOfCat {
         System.out.println("Имя: " + cat.getName());
         System.out.println(cat.getWeightInfo());
         System.out.println(cat.getAgeInfo());
-        System.out.println("Сытость: " + cat.getHunger() + " (0 – сильно хочет есть, 100 – сыт)");
+        System.out.println("Сытость: " + cat.getSatiety() + " (0 – сильно хочет есть, 100 – сыт)");
         System.out.println("Желание играть: " + cat.getWantToPlay() + " (0 – не хочет, 100 – хочет)");
         System.out.println("Настроение: " + cat.getMood().getMoodName());
     }
@@ -39,7 +39,7 @@ public class MenuOfCat {
         for (int i = 0; i < foods.length; i++) {
             System.out.println((i + 1) + ". " + foods[i].getName() +
                     " (вес +" + foods[i].getWeightGain() +
-                    " кг, сытость +" + foods[i].getHungerIncrease() + ")");
+                    " кг, сытость +" + foods[i].getSatietyIncrease() + ")");
         }
         System.out.println("0. Назад");
     }
@@ -118,12 +118,12 @@ public class MenuOfCat {
             switch (eventId) {
                 case 1:
                     System.out.println("🐭 " + cat.getName() + " поймал мышь! Сытость +5, вес +0.05 кг");
-                    cat.increaseHunger(5);
+                    cat.increaseSatiety(5);
                     cat.increaseWeight(0.05);
                     break;
                 case 2:
                     System.out.println("💤 " + cat.getName() + " долго спал и пропустил обед. Сытость -5");
-                    cat.decreaseHunger(5);
+                    cat.decreaseSatiety(5);
                     break;
                 case 3:
                     System.out.println("🎁 Сосед подарил игрушку! Желание играть +10");
@@ -149,7 +149,7 @@ public class MenuOfCat {
     public void tick(Cat cat) {
         menuCallCount++;
         cat.decreaseWeight(WEIGHT_LOSS_PER_TICK);
-        cat.decreaseHunger(HUNGER_LOSS_PER_TICK);
+        cat.decreaseSatiety(HUNGER_LOSS_PER_TICK);
         cat.decreaseWantToPlay(PLAY_DESIRE_LOSS_PER_TICK);
 
         if (menuCallCount % TICKS_PER_YEAR  == 0) {

@@ -7,12 +7,12 @@ public enum Food {
 
     private final String name;
     private final double weightGain;
-    private final int hungerIncrease;
+    private final int satietyIncrease;
 
-    Food(String name, double weightGain, int hungerIncrease) {
+    Food(String name, double weightGain, int satietyIncrease) {
         this.name = name;
         this.weightGain = weightGain;
-        this.hungerIncrease = hungerIncrease;
+        this.satietyIncrease = satietyIncrease;
     }
 
     public String getName() {
@@ -23,7 +23,7 @@ public enum Food {
         return weightGain;
     }
 
-    public int getHungerIncrease() {
-        return hungerIncrease;
+    public int getSatietyIncrease() {
+        return satietyIncrease;
     }
 }
