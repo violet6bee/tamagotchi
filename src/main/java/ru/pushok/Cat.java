@@ -9,6 +9,12 @@ public class Cat {
     private int hunger;
     private int wantToPlay;
 
+    private static final int FEED_THRESHOLD = 50;
+    private static final int MAX_AGE = 15;
+    private static final int MIN_HUNGER_TO_PLAY = 20;
+    private static final int MAX_HUNGER_TO_PLAY = 90;
+    private static final double MIN_HEALTHY_WEIGHT = 1.0;
+    private static final double MAX_HEALTHY_WEIGHT = 15.0;
 
     public Cat() {
         this.weight = 3.0;
@@ -53,7 +59,7 @@ public class Cat {
     }
 
     public void feed(Food food) {
-        if (this.hunger > 50) {
+        if (this.hunger > FEED_THRESHOLD) {
             System.out.println("Кот не хочет есть");
             return;
         }
@@ -70,10 +76,10 @@ public class Cat {
             return;
         }
 
-        if (this.hunger <= 20 ) {
+        if (this.hunger <= MIN_HUNGER_TO_PLAY ) {
             System.out.println(name + " не хочет играть, потому что он голодный");
             return;
-        } else if (this.hunger >= 90) {
+        } else if (this.hunger >= MAX_HUNGER_TO_PLAY) {
             System.out.println(name + " не хочет играть, потому что он сытый");
             return;
         }
@@ -91,8 +97,20 @@ public class Cat {
         this.weight = Math.max(0, this.weight - weight);
     }
 
+    public void increaseWeight(double weight) {
+        this.weight += weight;
+    }
+
     public void increaseHunger(int hunger) {
+        this.hunger = Math.min(100, this.hunger + hunger);
+    }
+
+    public void decreaseHunger(int hunger) {
         this.hunger = Math.max(0, this.hunger - hunger);
+    }
+
+    public void increaseWantToPlay(int wantToPlay) {
+        this.wantToPlay = Math.min(100, this.wantToPlay + wantToPlay);
     }
 
     public void decreaseWantToPlay(int wantToPlay){
@@ -100,13 +118,13 @@ public class Cat {
     }
 
     public String getDeathReason(){
-        if (weight < 1.0) {
+        if (weight < MIN_HEALTHY_WEIGHT) {
             return "Умер от истощения";
-        } else if (weight > 15.0) {
+        } else if (weight > MAX_HEALTHY_WEIGHT) {
             return "Умер от ожирения";
         } else if (hunger <= 0) {
             return "Умер от голода";
-        } else if (age >= 15) {
+        } else if (age >= MAX_AGE) {
             return "Умер от старости";
         }
         return null;

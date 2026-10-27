@@ -1,9 +1,16 @@
 package ru.pushok;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class MenuOfCat {
     private int menuCallCount = 0;
+    private final Random random = new Random();
+
+    private static final int TICKS_PER_YEAR = 20;
+    private static final double WEIGHT_LOSS_PER_TICK = 0.001;
+    private static final int HUNGER_LOSS_PER_TICK = 1;
+    private static final int PLAY_DESIRE_LOSS_PER_TICK = 1;
 
     public void InfoAboutCat(Cat cat) {
         System.out.println("(ฅ^•ﻌ•^ฅ) Информация о коте (ฅ^•ﻌ•^ฅ)");
@@ -78,27 +85,77 @@ public class MenuOfCat {
         }
     }
 
+    public void sleep(Cat cat) {
+        int hours = random.nextInt(9) + 4;
+        System.out.println("😴 " + cat.getName() + " уснул на " + hours + " часов...");
+        for (int i = 0; i < hours; i++) {
+            tick(cat);
+            if (cat.isDead()) {
+                System.out.println("💀 " + cat.getName() + " не проснулся...");
+                return;
+            }
+        }
+        System.out.println("☀️ " + cat.getName() + " проснулся!");
+        InfoAboutCat(cat);
+    }
+
+    public void randomEvents(Cat cat) {
+        if (random.nextInt(100) + 1 <= 10) {
+            int eventId = random.nextInt(4) + 1;
+            System.out.println("\n✨ СЛУЧАЙНОЕ СОБЫТИЕ ✨");
+
+            switch (eventId) {
+                case 1:
+                    System.out.println("🐭 " + cat.getName() + " поймал мышь! Сытость +5, вес +0.05 кг");
+                    cat.increaseHunger(5);
+                    cat.increaseWeight(0.05);
+                    break;
+                case 2:
+                    System.out.println("💤 " + cat.getName() + " долго спал и пропустил обед. Сытость -5");
+                    cat.decreaseHunger(5);
+                    break;
+                case 3:
+                    System.out.println("🎁 Сосед подарил игрушку! Желание играть +10");
+                    cat.increaseWantToPlay(10);
+                    break;
+                case 4:
+                    System.out.println("🌧️ На улице дождь. " + cat.getName() + " грустит. Желание играть -5");
+                    cat.decreaseWantToPlay(5);
+                    break;
+            }
+        }
+    }
+
     public void showMainMenu() {
         System.out.println(" (ฅ^•ﻌ•^ฅ) ГЛАВНОЕ МЕНЮ (ฅ^•ﻌ•^ฅ) ");
-        String[] choiceMenu = {"1 – состояние", "2 – кормить", "3 – играть", "S – выход"};
+        String[] choiceMenu = {"1 – состояние", "2 – кормить", "3 – играть", "4 - спать",
+                "S – выход"};
         for (String s : choiceMenu) {
             System.out.println(s);
         }
     }
 
-    public void countMainMenu(Cat cat) {
+    public void tick(Cat cat) {
         menuCallCount++;
-        cat.decreaseWeight(0.001);
-        cat.increaseHunger(1);
-        cat.decreaseWantToPlay(1);
+        cat.decreaseWeight(WEIGHT_LOSS_PER_TICK);
+        cat.decreaseHunger(HUNGER_LOSS_PER_TICK);
+        cat.decreaseWantToPlay(PLAY_DESIRE_LOSS_PER_TICK);
+
+        if (menuCallCount % TICKS_PER_YEAR  == 0) {
+            cat.increaseAge();
+        }
+    }
+
+    public void countMainMenu(Cat cat) {
+        tick(cat);
+
         System.out.println("⏳ Прошло время: сытость −1, вес −1 г");
 
-        if (menuCallCount % 20 == 0) {
-            cat.increaseAge();
+        if (menuCallCount % TICKS_PER_YEAR == 0) {
             System.out.println("🎂 " + cat.getName() + " стал старше! " + cat.getAgeInfo());
         }
 
-
+        randomEvents(cat);
     }
 
     public boolean handleMainCommand(Cat cat, Scanner scanner) {
@@ -113,15 +170,19 @@ public class MenuOfCat {
             case "3":
                 play(cat, scanner);
                 break;
+            case "4":
+                sleep(cat);
+                return true;
             case "S":
                 return false;
             default:
                 System.out.println("Неверный выбор. Выберите одну из этих команд" +
-                        " \"1 – состояние\", \"2 – кормить\", \"3 – играть\", \"S – выход\"");
+                        " \"1 – состояние\", \"2 – кормить\", \"3 – играть\", , \"4 – спать\"," +
+                        "\"S – выход\"");
+                return true;
         }
         countMainMenu(cat);
         return true;
     }
-
 
 }
