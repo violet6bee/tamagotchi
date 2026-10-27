@@ -12,6 +12,17 @@ public class MenuOfCat {
     private static final int HUNGER_LOSS_PER_TICK = 1;
     private static final int PLAY_DESIRE_LOSS_PER_TICK = 1;
 
+    public void askName(Cat cat, Scanner scanner) {
+        System.out.print("Введите имя кота: ");
+        String input = scanner.nextLine();
+        if (input.isEmpty()) {
+            cat.setName("Пушок");
+        } else {
+            cat.setName(input);
+        }
+        System.out.println("Кот создан!");
+    }
+
     public void InfoAboutCat(Cat cat) {
         System.out.println("(ฅ^•ﻌ•^ฅ) Информация о коте (ฅ^•ﻌ•^ฅ)");
         System.out.println("Имя: " + cat.getName());

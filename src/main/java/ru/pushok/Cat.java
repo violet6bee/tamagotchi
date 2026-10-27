@@ -23,10 +23,8 @@ public class Cat {
         this.wantToPlay = 50;
     }
 
-    /*ввести имя кота*/
-    public void askName(Scanner scanner) {
-        System.out.println("Введите имя кота: ");
-        this.name = scanner.nextLine();
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {

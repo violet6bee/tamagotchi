@@ -8,8 +8,7 @@ public class LifeOfCat {
         MenuOfCat menuOfCat = new MenuOfCat();
         Scanner scanner = new Scanner(System.in);
 
-        cat.askName(scanner);
-        System.out.println("Кот создан!");
+        menuOfCat.askName(cat, scanner);
 
         System.out.println("Стартовое состояние кота:");
         menuOfCat.InfoAboutCat(cat);
