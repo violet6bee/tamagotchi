@@ -5,7 +5,7 @@ public class Cat {
     private double weight;
     private int age;
     private int satiety;
-    private int wantToPlay;
+    private int playSatisfaction;
 
     private static final int FEED_THRESHOLD = 50;
     private static final int MAX_AGE = 15;
@@ -18,7 +18,7 @@ public class Cat {
         this.weight = 3.0;
         this.age = 0;
         this.satiety = 50;
-        this.wantToPlay = 50;
+        this.playSatisfaction = 50;
     }
 
     public void setName(String name) {
@@ -50,8 +50,8 @@ public class Cat {
         return satiety;
     }
 
-    public int getWantToPlay() {
-        return wantToPlay;
+    public int getPlaySatisfaction() {
+        return playSatisfaction;
     }
 
     public void feed(Food food) {
@@ -67,7 +67,7 @@ public class Cat {
     }
 
     public void play(Toys toys) {
-        if (this.wantToPlay == 100) {
+        if (this.playSatisfaction == 100) {
             System.out.println(name + " не хочет играть, потому что он наигрался");
             return;
         }
@@ -80,9 +80,9 @@ public class Cat {
             return;
         }
 
-        this.wantToPlay = Math.min(100, this.wantToPlay + toys.getWantToPlay());
+        this.playSatisfaction = Math.min(100, this.playSatisfaction + toys.getPlaySatisfactionIncrease());
         System.out.println("Кот поиграл " + "\"" + toys.getName() + "\"" + ". " +
-                "Желание играть: " + wantToPlay);
+                "Желание играть: " + playSatisfaction);
     }
 
     public void increaseAge() {
@@ -106,11 +106,11 @@ public class Cat {
     }
 
     public void increaseWantToPlay(int wantToPlay) {
-        this.wantToPlay = Math.min(100, this.wantToPlay + wantToPlay);
+        this.playSatisfaction = Math.min(100, this.playSatisfaction + wantToPlay);
     }
 
     public void decreaseWantToPlay(int wantToPlay){
-        this.wantToPlay = Math.max(0, this.wantToPlay  - wantToPlay);
+        this.playSatisfaction = Math.max(0, this.playSatisfaction - wantToPlay);
     }
 
     public String getDeathReason(){
@@ -131,6 +131,6 @@ public class Cat {
     }
 
     public Mood getMood() {
-        return Mood.of(this.satiety, this.wantToPlay);
+        return Mood.of(this.satiety, this.playSatisfaction);
     }
 }

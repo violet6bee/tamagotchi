@@ -29,7 +29,7 @@ public class MenuOfCat {
         System.out.println(cat.getWeightInfo());
         System.out.println(cat.getAgeInfo());
         System.out.println("Сытость: " + cat.getSatiety() + " (0 – сильно хочет есть, 100 – сыт)");
-        System.out.println("Желание играть: " + cat.getWantToPlay() + " (0 – не хочет, 100 – хочет)");
+        System.out.println("Желание играть: " + cat.getPlaySatisfaction() + " ((0 – очень хочет играть, 100 – наигрался)");
         System.out.println("Настроение: " + cat.getMood().getMoodName());
     }
 
@@ -70,7 +70,7 @@ public class MenuOfCat {
         Toys[] toys = Toys.values();
         for (int i = 0; i < toys.length; i++) {
             System.out.println((i + 1) + ". " + toys[i].getName() +
-                    " (удовлетворение игрой +" + toys[i].getWantToPlay() + ")");
+                    " (удовлетворение игрой +" + toys[i].getPlaySatisfactionIncrease() + ")");
         }
         System.out.println("0. Назад");
     }

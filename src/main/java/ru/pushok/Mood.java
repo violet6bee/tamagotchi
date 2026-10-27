@@ -16,9 +16,9 @@ public enum Mood {
         return moodName;
     }
 
-    public static Mood of(int satiety, int wantToPlay) {
+    public static Mood of(int satiety, int playSatisfaction ) {
         boolean wellFed = satiety > 50;
-        boolean wantsToPlay = wantToPlay > 50;
+        boolean wantsToPlay = playSatisfaction > 50;
 
         if (wellFed && wantsToPlay) {
             return HAPPY;
