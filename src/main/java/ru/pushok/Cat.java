@@ -29,6 +29,22 @@ public class Cat {
         return name;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getSatiety() {
+        return satiety;
+    }
+
+    public int getPlaySatisfaction() {
+        return playSatisfaction;
+    }
+
     public String getWeightInfo() {
         return String.format("Вес кота: %.2f кг", weight);
     }
@@ -44,14 +60,6 @@ public class Cat {
 
     public String getAgeInfo() {
         return "Возраст кота: " + age + " " + getYearWord(age);
-    }
-
-    public int getSatiety() {
-        return satiety;
-    }
-
-    public int getPlaySatisfaction() {
-        return playSatisfaction;
     }
 
     public void feed(Food food) {
