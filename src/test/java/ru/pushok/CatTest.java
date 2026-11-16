@@ -110,4 +110,25 @@ class CatTest {
         assertEquals(Mood.SAD, cat.getMood());
     }
 
+    @Test
+    void catShouldAgeUp() {
+        Cat cat = new Cat();
+        cat.increaseAge();
+        assertEquals(1, cat.getAge());
+    }
+
+    @Test
+    void catShouldLoseWeight() {
+        Cat cat = new Cat();
+        cat.decreaseWeight(0.5);
+        assertEquals(2.5, cat.getWeight(), 0.01);
+    }
+
+    @Test
+    void catWeightShouldNotDropBelowZero() {
+        Cat cat = new Cat();
+        cat.decreaseWeight(5.0);
+        assertEquals(0.0, cat.getWeight(), 0.01);
+    }
+
 }
