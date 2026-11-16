@@ -58,5 +58,32 @@ class CatTest {
         assertEquals(100, cat.getPlaySatisfaction());
     }
 
+    @Test
+    void catShouldDieFromMinWeight() {
+        Cat cat = new Cat("Барсик", 0.9, 0, 50, 100);
+        assertTrue(cat.isDead());
+        assertEquals("Умер от истощения", cat.getDeathReason());
+    }
+
+    @Test
+    void catShouldDieFromMaxWeight() {
+        Cat cat = new Cat("Барсик", 15.1, 0, 50, 100);
+        assertTrue(cat.isDead());
+        assertEquals("Умер от ожирения", cat.getDeathReason());
+    }
+
+    @Test
+    void catShouldDieFromHungry() {
+        Cat cat = new Cat("Барсик", 4.1, 0, 0, 100);
+        assertTrue(cat.isDead());
+        assertEquals("Умер от голода", cat.getDeathReason());
+    }
+
+    @Test
+    void catShouldDieFromMaxAge() {
+        Cat cat = new Cat("Барсик", 5.1, 15, 10, 100);
+        assertTrue(cat.isDead());
+        assertEquals("Умер от старости", cat.getDeathReason());
+    }
 
 }

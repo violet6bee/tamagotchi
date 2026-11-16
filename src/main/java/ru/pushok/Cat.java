@@ -9,7 +9,7 @@ public class Cat {
 
     private static final int MAX_STAT = 100;
     private static final int MAX_AGE = 15;
-    private static final int MIN_SATIETY_TO_PLAY = 20;
+    private static final int MIN_HUNGER_TO_PLAY = 20;
     private static final int MAX_SATIETY_TO_PLAY  = 100;
     private static final double MIN_HEALTHY_WEIGHT = 1.0;
     private static final double MAX_HEALTHY_WEIGHT = 15.0;
@@ -88,7 +88,7 @@ public class Cat {
             return;
         }
 
-        if (this.satiety <= MIN_SATIETY_TO_PLAY ) {
+        if (this.satiety <= MIN_HUNGER_TO_PLAY ) {
             System.out.println(name + " не хочет играть, потому что он голодный");
             return;
         } else if (this.satiety >= MAX_SATIETY_TO_PLAY ) {
@@ -130,12 +130,12 @@ public class Cat {
     }
 
     public String getDeathReason(){
-        if (weight < MIN_HEALTHY_WEIGHT) {
-            return "Умер от истощения";
+        if (satiety <= 0) {
+            return "Умер от голода";
         } else if (weight > MAX_HEALTHY_WEIGHT) {
             return "Умер от ожирения";
-        } else if (satiety <= 0) {
-            return "Умер от голода";
+        } else if (weight < MIN_HEALTHY_WEIGHT) {
+            return "Умер от истощения";
         } else if (age >= MAX_AGE) {
             return "Умер от старости";
         }
