@@ -9,8 +9,8 @@ public class Cat {
 
     private static final int MAX_STAT = 100;
     private static final int MAX_AGE = 15;
-    private static final int MIN_HUNGER_TO_PLAY = 20;
-    private static final int MAX_HUNGER_TO_PLAY = 100;
+    private static final int MIN_SATIETY_TO_PLAY = 20;
+    private static final int MAX_SATIETY_TO_PLAY  = 100;
     private static final double MIN_HEALTHY_WEIGHT = 1.0;
     private static final double MAX_HEALTHY_WEIGHT = 15.0;
 
@@ -19,6 +19,14 @@ public class Cat {
         this.age = 0;
         this.satiety = 50;
         this.playSatisfaction = 50;
+    }
+
+    public Cat(String name, double weight, int age, int satiety, int playSatisfaction) {
+        this.name = name;
+        this.weight = weight;
+        this.age = age;
+        this.satiety = satiety;
+        this.playSatisfaction = playSatisfaction;
     }
 
     public void setName(String name) {
@@ -80,17 +88,17 @@ public class Cat {
             return;
         }
 
-        if (this.satiety <= MIN_HUNGER_TO_PLAY ) {
+        if (this.satiety <= MIN_SATIETY_TO_PLAY ) {
             System.out.println(name + " не хочет играть, потому что он голодный");
             return;
-        } else if (this.satiety >= MAX_HUNGER_TO_PLAY) {
+        } else if (this.satiety >= MAX_SATIETY_TO_PLAY ) {
             System.out.println(name + " не хочет играть, потому что он сытый");
             return;
         }
 
         this.playSatisfaction = Math.min(MAX_STAT, this.playSatisfaction + toys.getPlaySatisfactionIncrease());
         System.out.println("Кот поиграл " + "\"" + toys.getName() + "\"" + ". " +
-                "Желание играть: " + playSatisfaction);
+                "Удовлетворенность играми: " + playSatisfaction);
     }
 
     public void increaseAge() {

@@ -23,21 +23,40 @@ class CatTest {
     }
 
     @Test
-    void satietyShouldNotExceedMaxLimit() {
-        Cat cat = new Cat();
-        cat.feed(Food.FISH);
-        cat.feed(Food.FISH);
+    void catShouldRefuseToEatWhenCompletelyFull() {
+        Cat cat = new Cat("Барсик", 4.0, 0, 100, 50);
         cat.feed(Food.FISH);
         assertEquals(100, cat.getSatiety());
+        assertEquals(4.0, cat.getWeight(), 0.01);
     }
 
     @Test
-    void catShouldRefuseToEatWhenCompletelyFull() {
-        Cat cat = new Cat();
-        cat.feed(Food.BLACK_CAVIAR);
-        cat.feed(Food.BLACK_CAVIAR);
-        cat.feed(Food.FISH);
-        assertEquals(100, cat.getSatiety());
-        assertEquals(4.0, cat.getWeight());
+    void catShouldNotPlayIfHungry () {
+        Cat cat = new Cat("Барсик", 3.0, 0, 20, 50);
+        cat.play(Toys.TOY_MOUSE);
+        assertEquals(50, cat.getPlaySatisfaction());
     }
+
+    @Test
+    void catShouldNotPlayWhenTooFull() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 100, 50);
+        cat.play(Toys.TOY_MOUSE);
+        assertEquals(50, cat.getPlaySatisfaction());
+    }
+
+    @Test
+    void catShouldPlay() {
+        Cat cat = new Cat();
+        cat.play(Toys.TOY_MOUSE);
+        assertEquals(65, cat.getPlaySatisfaction());
+    }
+
+    @Test
+    void catShouldNotPlayWhenPlaySatisfactionIsFull() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 50, 100);
+        cat.play(Toys.TOY_MOUSE);
+        assertEquals(100, cat.getPlaySatisfaction());
+    }
+
+
 }
