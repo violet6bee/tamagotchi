@@ -7,10 +7,10 @@ public class Cat {
     private int satiety;
     private int playSatisfaction;
 
-    private static final int FEED_THRESHOLD = 50;
+    private static final int MAX_STAT = 100;
     private static final int MAX_AGE = 15;
     private static final int MIN_HUNGER_TO_PLAY = 20;
-    private static final int MAX_HUNGER_TO_PLAY = 90;
+    private static final int MAX_HUNGER_TO_PLAY = 100;
     private static final double MIN_HEALTHY_WEIGHT = 1.0;
     private static final double MAX_HEALTHY_WEIGHT = 15.0;
 
@@ -63,19 +63,19 @@ public class Cat {
     }
 
     public void feed(Food food) {
-        if (this.satiety > FEED_THRESHOLD) {
+        if (this.satiety >= MAX_STAT) {
             System.out.println("Кот не хочет есть");
             return;
         }
 
         this.weight = this.weight + food.getWeightGain();
-        this.satiety = Math.min(100, this.satiety + food.getSatietyIncrease());
+        this.satiety = Math.min(MAX_STAT, this.satiety + food.getSatietyIncrease());
         System.out.println("Кот поел " + "\"" + food.getName() + "\"" + ". " +
-                "Вес: " + weight + " кг, сытость: " + satiety);
+                getWeightInfo() + ", сытость: " + satiety);
     }
 
     public void play(Toys toys) {
-        if (this.playSatisfaction == 100) {
+        if (this.playSatisfaction >= MAX_STAT) {
             System.out.println(name + " не хочет играть, потому что он наигрался");
             return;
         }
@@ -88,7 +88,7 @@ public class Cat {
             return;
         }
 
-        this.playSatisfaction = Math.min(100, this.playSatisfaction + toys.getPlaySatisfactionIncrease());
+        this.playSatisfaction = Math.min(MAX_STAT, this.playSatisfaction + toys.getPlaySatisfactionIncrease());
         System.out.println("Кот поиграл " + "\"" + toys.getName() + "\"" + ". " +
                 "Желание играть: " + playSatisfaction);
     }
@@ -113,12 +113,12 @@ public class Cat {
         this.satiety = Math.max(0, this.satiety - satiety);
     }
 
-    public void increaseWantToPlay(int wantToPlay) {
-        this.playSatisfaction = Math.min(100, this.playSatisfaction + wantToPlay);
+    public void increasePlaySatisfaction(int playSatisfaction) {
+        this.playSatisfaction = Math.min(100, this.playSatisfaction + playSatisfaction);
     }
 
-    public void decreaseWantToPlay(int wantToPlay){
-        this.playSatisfaction = Math.max(0, this.playSatisfaction - wantToPlay);
+    public void decreasePlaySatisfaction(int playSatisfaction){
+        this.playSatisfaction = Math.max(0, this.playSatisfaction - playSatisfaction);
     }
 
     public String getDeathReason(){

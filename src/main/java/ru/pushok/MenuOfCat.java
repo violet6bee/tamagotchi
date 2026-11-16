@@ -127,11 +127,11 @@ public class MenuOfCat {
                     break;
                 case 3:
                     System.out.println("🎁 Сосед подарил игрушку! Желание играть +10");
-                    cat.increaseWantToPlay(10);
+                    cat.increasePlaySatisfaction(10);
                     break;
                 case 4:
                     System.out.println("🌧️ На улице дождь. " + cat.getName() + " грустит. Желание играть -5");
-                    cat.decreaseWantToPlay(5);
+                    cat.decreasePlaySatisfaction(5);
                     break;
             }
         }
@@ -150,7 +150,7 @@ public class MenuOfCat {
         menuCallCount++;
         cat.decreaseWeight(WEIGHT_LOSS_PER_TICK);
         cat.decreaseSatiety(HUNGER_LOSS_PER_TICK);
-        cat.decreaseWantToPlay(PLAY_DESIRE_LOSS_PER_TICK);
+        cat.decreasePlaySatisfaction(PLAY_DESIRE_LOSS_PER_TICK);
 
         if (menuCallCount % TICKS_PER_YEAR  == 0) {
             cat.increaseAge();
