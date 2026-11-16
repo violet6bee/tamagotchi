@@ -86,4 +86,28 @@ class CatTest {
         assertEquals("Умер от старости", cat.getDeathReason());
     }
 
+    @Test
+    void catShouldBeHappy() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 51, 51);
+        assertEquals(Mood.HAPPY, cat.getMood());
+    }
+
+    @Test
+    void catShouldBeBoring() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 51, 50);
+        assertEquals(Mood.BORED, cat.getMood());
+    }
+
+    @Test
+    void catShouldBeHungry() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 50, 51);
+        assertEquals(Mood.HUNGRY, cat.getMood());
+    }
+
+    @Test
+    void catShouldBeSad() {
+        Cat cat = new Cat("Барсик", 3.0, 0, 50, 50);
+        assertEquals(Mood.SAD, cat.getMood());
+    }
+
 }

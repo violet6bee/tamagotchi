@@ -2,7 +2,7 @@ package ru.pushok;
 
 public enum Mood {
     HAPPY("Счастлив"),
-    BORING("Скучает"),
+    BORED("Скучает"),
     HUNGRY("Голоден"),
     SAD("Грустит");
 
@@ -23,7 +23,7 @@ public enum Mood {
         if (wellFed && wantsToPlay) {
             return HAPPY;
         } else if (wellFed && !wantsToPlay) {
-            return BORING;
+            return BORED;
         } else if (!wellFed && wantsToPlay) {
             return HUNGRY;
         }
