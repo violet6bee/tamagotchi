@@ -1,31 +1,23 @@
 package ru.pushok;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class LifeOfCat {
     public static void main(String[] args) {
-        Cat cat = new Cat();
-        MenuOfCat menuOfCat = new MenuOfCat();
+        // 1. Запрашиваем имя в консоли (пока оставим так для простоты)
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите имя кота: ");
+        String name = scanner.nextLine();
 
-        menuOfCat.askName(cat, scanner);
+        // 2. Создаем кота
+        Cat cat = new Cat();
+        cat.setName(name);
 
-        System.out.println("Стартовое состояние кота:");
-        menuOfCat.InfoAboutCat(cat);
-
-        boolean running = true;
-
-        while (running) {
-            System.out.println("\n" + "─".repeat(40));
-            menuOfCat.showMainMenu();
-            running = menuOfCat.handleMainCommand(cat, scanner);
-
-            if (cat.isDead()) {
-                System.out.println("💀 " + cat.getName() + " " + cat.getDeathReason());
-                break;
-            }
-        }
-
-        scanner.close();
+        // 3. Запускаем графическое окно (Swing требует запуска в отдельном потоке)
+        SwingUtilities.invokeLater(() -> {
+            GameWindow window = new GameWindow(cat);
+            window.setVisible(true);
+        });
     }
 }
