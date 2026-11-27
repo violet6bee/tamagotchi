@@ -5,19 +5,29 @@ import java.util.Scanner;
 
 public class LifeOfCat {
     public static void main(String[] args) {
-        // 1. Запрашиваем имя в консоли (пока оставим так для простоты)
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите имя кота: ");
-        String name = scanner.nextLine();
+         SwingUtilities.invokeLater(() ->{
+             String name = "";
 
-        // 2. Создаем кота
-        Cat cat = new Cat();
-        cat.setName(name);
+             while (name == null || name.trim().isEmpty()) {
+                 name = JOptionPane.showInputDialog(
+                         null,
+                         "Как вы назовете своего кота?",
+                         "Создание кота",
+                         JOptionPane.QUESTION_MESSAGE
+                 );
 
-        // 3. Запускаем графическое окно (Swing требует запуска в отдельном потоке)
-        SwingUtilities.invokeLater(() -> {
-            GameWindow window = new GameWindow(cat);
-            window.setVisible(true);
-        });
+                 if (name == null) {
+                     System.exit(0);
+                 }
+             }
+
+             Cat cat = new Cat();
+             cat.setName(name.trim());
+
+
+             GameWindow window = new GameWindow(cat);
+             window.setVisible(true);
+         });
+
     }
 }
