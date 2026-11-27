@@ -70,35 +70,31 @@ public class Cat {
         return "Возраст кота: " + age + " " + getYearWord(age);
     }
 
-    public void feed(Food food) {
+    public String feed(Food food) {
         if (this.satiety >= MAX_STAT) {
-            System.out.println("Кот не хочет есть");
-            return;
+            return "Кот не хочет есть";
         }
 
         this.weight = this.weight + food.getWeightGain();
         this.satiety = Math.min(MAX_STAT, this.satiety + food.getSatietyIncrease());
-        System.out.println("Кот поел " + "\"" + food.getName() + "\"" + ". " +
-                getWeightInfo() + ", сытость: " + satiety);
+        return "Кот поел " + "\"" + food.getName() + "\"" + ". " +
+                getWeightInfo() + ", сытость: " + satiety;
     }
 
-    public void play(Toys toys) {
+    public String play(Toys toys) {
         if (this.playSatisfaction >= MAX_STAT) {
-            System.out.println(name + " не хочет играть, потому что он наигрался");
-            return;
+            return "Кот не хочет играть, потому что он наигрался.";
         }
 
         if (this.satiety <= MIN_HUNGER_TO_PLAY ) {
-            System.out.println(name + " не хочет играть, потому что он голодный");
-            return;
+            return "Кот не хочет играть, потому что он голоден.";
         } else if (this.satiety >= MAX_SATIETY_TO_PLAY ) {
-            System.out.println(name + " не хочет играть, потому что он сытый");
-            return;
+            return "Кот не хочет играть, потому что он сыт.";
         }
 
         this.playSatisfaction = Math.min(MAX_STAT, this.playSatisfaction + toys.getPlaySatisfactionIncrease());
-        System.out.println("Кот поиграл " + "\"" + toys.getName() + "\"" + ". " +
-                "Удовлетворенность играми: " + playSatisfaction);
+        return "Кот поиграл " + "\"" + toys.getName() + "\"" + ". " +
+                "Удовлетворенность играми: " + playSatisfaction;
     }
 
     public void increaseAge() {

@@ -20,4 +20,9 @@ public enum Toys {
     public int getPlaySatisfactionIncrease() {
         return playSatisfactionIncrease;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

@@ -29,4 +29,9 @@ public enum Mood {
         }
         return SAD;
     }
+
+    @Override
+    public String toString() {
+        return this.moodName;
+    }
 }

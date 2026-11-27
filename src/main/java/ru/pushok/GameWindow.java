@@ -2,6 +2,7 @@ package ru.pushok;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.Random;
 
 public class GameWindow extends JFrame {
@@ -11,6 +12,10 @@ public class GameWindow extends JFrame {
     private JProgressBar playBar;
     private JLabel infoLabel;
     private JTextArea eventLog;
+
+    private JButton feedButton;
+    private JButton playButton;
+    private JButton sleepButton;
 
     private int tickCount = 0;
     private final Random random = new Random();
@@ -41,7 +46,8 @@ public class GameWindow extends JFrame {
 
         // 3. Панель с полосками и логом событий
 
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
         JPanel statsPanel = new JPanel((new GridLayout(2, 2, 10, 10)));
         statsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -56,41 +62,66 @@ public class GameWindow extends JFrame {
         playBar.setStringPainted(true);
         statsPanel.add(playBar);
 
-        bottomPanel.add(statsPanel, BorderLayout.NORTH);
+        bottomPanel.add(statsPanel);
 
         // Лог событий (чтобы игрок видел, что происходит)
         eventLog = new JTextArea(5, 40);
         eventLog.setEditable(false);
         eventLog.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(eventLog);
-        bottomPanel.add(scrollPane, BorderLayout.CENTER);
-
-        add(bottomPanel, BorderLayout.SOUTH);
+        bottomPanel.add(scrollPane);
 
         // 4. Панель с кнопками
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        JButton feedButton = new JButton("Покормить");
-        JButton playButton = new JButton("Играть");
-        JButton sleepButton = new JButton("Спать");
+        feedButton = new JButton("Покормить");
+        playButton = new JButton("Играть");
+        sleepButton = new JButton("Спать");
 
         buttonPanel.add(feedButton);
         buttonPanel.add(playButton);
         buttonPanel.add(sleepButton);
-        add(buttonPanel, BorderLayout.PAGE_END);
+
+        bottomPanel.add(buttonPanel);
+
+        add(bottomPanel, BorderLayout.SOUTH);
 
         // 5. Обработчики кнопок
         feedButton.addActionListener(e -> {
-            // Тут будет логика выбора еды
-            cat.feed(Food.FISH);
-            log("Кот поел Рыбу.");
-            updateUI();
-            checkDeath();
+            Food[] foods = Food.values();
+            Food selected = (Food) JOptionPane.showInputDialog(
+                    this,
+                    "Выберите еду:",
+                    "Кормление",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    foods,
+                    foods[0]
+            );
+            if (selected != null) {
+                String result = cat.feed(selected);
+                log(result);
+                updateUI();
+                checkDeath();
+            }
         });
 
         playButton.addActionListener(e -> {
-            cat.play(Toys.TOY_MOUSE);
-            updateUI();
-            checkDeath();
+            Toys[] toys = Toys.values();
+            Toys selected = (Toys) JOptionPane.showInputDialog(
+                    this,
+                    "Выберите игру:",
+                    "Во что поиграем?",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    toys,
+                    toys[0]
+            );
+            if (selected != null) {
+                String result = cat.play(selected);
+                log(result);
+                updateUI();
+                checkDeath();
+            }
         });
 
         sleepButton.addActionListener(e -> {
@@ -113,6 +144,9 @@ public class GameWindow extends JFrame {
     private void log(String message) {
         eventLog.append(message + "\n");
         eventLog.setCaretPosition(eventLog.getDocument().getLength());
+
+        // для отладки
+        System.out.println(message);
     }
 
     private void tick() {
@@ -184,13 +218,9 @@ public class GameWindow extends JFrame {
                     "Смерть кота",
                     JOptionPane.ERROR_MESSAGE);
 
-            for (Component c : this.getContentPane().getComponents()){
-                if (c instanceof JPanel) {
-                    for (Component inner : ((JPanel) c).getComponents()){
-                        if (inner instanceof JButton) inner.setEnabled(false);
-                    }
-                }
-            }
+            feedButton.setEnabled(false);
+            playButton.setEnabled(false);
+            sleepButton.setEnabled(false);
         }
     }
     // Метод для обновления картинки и полосок
@@ -210,11 +240,25 @@ public class GameWindow extends JFrame {
             satietyBar.setForeground(new Color(50, 200, 50)); // Зеленый
         }
 
-        // Тут будет смена картинки (пока просто текст)
-        if (cat.getSatiety() < 20) {
-            catImageLabel.setText("Кот голоден! (Тут будет грустная картинка)");
+        String imagePath = "/images/cat_happy.png";
+
+        if (cat.getMood() == Mood.HUNGRY) {
+            imagePath = "/images/cat_hungry.png";
+        } else if (cat.getMood() == Mood.SAD) {
+            imagePath = "/images/cat_sad.png";
+        } else if (cat.getMood() == Mood.BORED) {
+            imagePath = "/images/cat_bored.png";
+        }
+
+        URL imgUrl = getClass().getResource(imagePath);
+        if (imgUrl == null) {
+            catImageLabel.setIcon(null);
+            catImageLabel.setText("Картинка не найдена");
         } else {
-            catImageLabel.setText("Кот доволен! (Тут будет веселая картинка)");
+            ImageIcon icon = new ImageIcon(imgUrl);
+            Image img = icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+            catImageLabel.setIcon(new ImageIcon(img));
+            catImageLabel.setText("");
         }
     }
 }

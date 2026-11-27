@@ -26,4 +26,9 @@ public enum Food {
     public int getSatietyIncrease() {
         return satietyIncrease;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
